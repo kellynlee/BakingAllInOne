@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sampling</title>
+    <link rel="stylesheet" href="project.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/3e4743276d.js" crossorigin="anonymous"></script>
+  
+</head>
+
+<body class="d-flex flex-column justify-content-center align-items-center" id="col-bg">
+    <!-- Flip hand picture -->
+    <div hidden>
+        <img src="https://i.ibb.co/5W1kqC3/flip-w.png" class="img-fluid" alt="Flip one hand picture" id="flip">
+        <div class="w-100 d-flex flex-row gap-5 justify-content-center align-items-end mb-5 pb-5 position-absolute bottom-0 start-50 translate-middle-x">
+            <h2 class="mt-5 pt-5">Flip your hand to start the sampling.</h2>
+        </div>
+    </div>
+    
+    <!-- 3 -->
+    <div hidden>
+        <h1 id="display"><dt>3</dt></h1>
+    </div>
+
+    <!-- 2 -->
+    <div hidden>
+        <h1 id="display"><dt>2</dt></h1>
+    </div> 
+
+    <!-- 1 -->
+    <div hidden>
+        <h1 id="display"><dt>1</dt></h1>
+    </div>
+
+    <!-- Start -->
+    <div hidden>
+        <h1 id="display"><dt>Start!</dt></h1>
+    </div>
+
+    <!-- Timer -->
+    <div>
+        <h1 id="display"><dt>
+            0<span class="display-1"> min </span>
+            49<span class="display-1"> sec</span>
+        </dt></h1>
+
+        <div class="w-100 d-flex flex-row gap-5 justify-content-center align-items-end mb-5 pb-5 position-absolute bottom-0 start-50 translate-middle-x">
+            <img src="https://i.ibb.co/5W1kqC3/flip-w.png" class="img-fluid" alt="Flip one hand picture">
+            <h2>Flip your hand again to end the sampling.</h2>
+        </div>
+    </div>
+</body>
+
+</html>
+
+

@@ -1,0 +1,83 @@
+:root{
+    --main-bg: #E7A67E;
+    --main-h: #cc6e33;
+    --main-d:#EDD9CC;
+    --scd-bg: #ECCB45;
+}
+
+* {font-family: 'Open Sans Condensed', sans-serif;}
+html, body {
+    height: 100%;
+  }
+
+.comp, .incom {
+    color: var(--main-bg) !important;
+    font-size: 1.5vw !important;
+}
+.incom {color: var(--main-d) !important;}
+
+/* Page Background */
+#col-bg {
+    background-color: var(--main-bg);
+    color: white;
+}
+
+/* Anchor */
+.btn-link {
+    color: var(--main-bg) !important;
+    letter-spacing:0.1vw !important;
+}
+.btn-link:hover {
+    color: var(--main-h) !important;
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: var(--main-bg) !important;
+    border-color: var(--main-bg) !important;
+}
+.btn-secondary {
+    background-color: var(--main-d) !important;
+    border-color: var(--main-d) !important;
+}
+.btn-primary:hover {
+    background-color: var(--main-h) !important;
+    border-color: var(--main-h) !important;
+}
+.btn-light {
+    background-color: white !important;
+    border-color: white !important;
+    color: var(--main-h) !important;
+}
+.btn-light:hover {
+    background-color: var(--main-d) !important;
+    border-color: var(--main-d) !important;
+}
+
+/* Progress Bar */
+.progress {
+    background-color: var(--main-d) !important;
+}
+.progress-bar {
+    background-color: var(--main-bg) !important;
+}
+
+/* Calibration Picture */
+#content {margin-top: 18vh}
+#text-content {margin-top: 10vh}
+#cal-pic {height: 30vh}
+.spinner-grow {
+    width: 10em !important; 
+    height: 10em !important;
+    color: var(--main-bg);    
+}
+.fa-circle-xmark, .fa-circle-check {color: var(--main-h);}
+
+/* Flip Hand */
+#flip {height: 40vh;}
+
+/* Count Down */
+#display {font-size: 16vh;}
+
+/* Icons */
+#icon-w {color: white;}
