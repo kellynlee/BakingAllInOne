@@ -2,7 +2,7 @@
   <div class="home">
     <div class="mb-5">
       <img
-        src="https://i.ibb.co/6sGFkTz/Cakegif.gif"
+        src="../assets/cake.gif"
         class="img-fluid"
         height=""
         alt="Cupcake Animation Icon"
@@ -14,14 +14,21 @@
     </div>
 
     <div>
-      <el-row justify="center" gutter="10">
-        <el-button @click="onNavigate('/decoration/1')"> Decoration </el-button>
+      <el-row justify="center" class="btn">
+        <el-button
+          size="large"
+          type="primary"
+          round
+          @click="onNavigate('/decoration/1')"
+        >
+          Decoration
+        </el-button>
       </el-row>
-      <el-row justify="center">
-        <el-button> Mix </el-button>
+      <el-row justify="center" class="btn">
+        <el-button size="large" type="primary" round> Mix </el-button>
       </el-row>
-      <el-row justify="center">
-        <el-button> Pouring </el-button>
+      <el-row justify="center" class="btn">
+        <el-button size="large" type="primary" round> Pouring </el-button>
       </el-row>
     </div>
   </div>
@@ -42,3 +49,13 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.home {
+  height: 100%;
+  background: white;
+}
+.btn {
+  margin-bottom: 2rem;
+}
+</style>

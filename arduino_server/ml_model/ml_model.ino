@@ -37,6 +37,7 @@ int endFlip = 0;
 int startFlip = 0;
 int decMode = 0;
 int mixMode = 0;
+int calibrateMode = 0;
 
 static unsigned long last_interval_ms = 0;
 
@@ -66,7 +67,7 @@ void notifyClients(String msg) {
 void onStartCalibrate () {
   Serial.println("start calibration");
   // createMsgJson("calibrate successful!");
-  notifyClients("calibrating");
+  calibrateMode = 1;
 }
 
 void onDetectFlip () {
@@ -78,7 +79,7 @@ void onDetectFlip () {
 
 void onStartVibrate () {
   digitalWrite(vib, HIGH);
-  delay(200);
+  delay(300);
   digitalWrite(vib, LOW);
   Serial.println("start vibrating motor!");
   notifyClients("vibrating");
@@ -118,6 +119,8 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
       onStartVibrate();
     } else if (strcmp((char*)data, "mix") == 0) {
       onStartMixing();
+    } else if (strcmp((char*)data, "stop_mix") == 0) {
+      onEndMixing();
     }
   }
 }
@@ -149,6 +152,22 @@ void createMsgJson(char *msg) {
   jsonDocument.clear();  
   jsonDocument["message"] = msg;
   serializeJson(jsonDocument, buffer);
+}
+
+void startCalibrating() {
+  for (int i = 0; i < 300; i++) {
+    delay(10);
+    if(mpu.getMotionInterruptStatus()) {
+      notifyClients("moved");
+      calibrateMode = 0;
+      return;
+    }
+  }
+  calibrateMode = 0;
+  digitalWrite(vib, HIGH);
+  delay(1000);
+  digitalWrite(vib, LOW);
+  notifyClients("calibrated");
 }
 
 void checkMovement(char* type) {
@@ -270,7 +289,11 @@ void setupMpu() {
       Serial.println("5 Hz");
       break;
   }
-
+  mpu.setMotionDetectionThreshold(1);
+  mpu.setMotionDetectionDuration(20);
+  mpu.setInterruptPinLatch(true);	// Keep it latched.  Will turn off when reinitialized.
+  mpu.setInterruptPinPolarity(true);
+  mpu.setMotionInterrupt(true);
 }
 
 void setup() {
@@ -296,5 +319,9 @@ void loop() {
   }
   if (mixMode) {
     checkMovement("MixHandling");
+    delay(2000);
+  }
+  if (calibrateMode) {
+    startCalibrating();
   }
 }
