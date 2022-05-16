@@ -14,28 +14,15 @@
     </div>
 
     <div>
-      <div class="col-3 mx-auto py-5">
-        <div class="d-grid gap-4" id="home-nav">
-          <a
-            href="Calibration.html"
-            class="btn btn-primary btn-lg py-3 shadow-sm rounded-pill fs-3"
-            type="button"
-            >Piping</a
-          >
-          <a
-            href="Calibration.html"
-            class="btn btn-primary btn-lg py-3 shadow-sm rounded-pill fs-3"
-            type="button"
-            >Mixing</a
-          >
-          <a
-            href="Calibration.html"
-            class="btn btn-primary btn-lg py-3 shadow-sm rounded-pill fs-3"
-            type="button"
-            >Pouring</a
-          >
-        </div>
-      </div>
+      <el-row justify="center" gutter="10">
+        <el-button @click="onNavigate('/decoration/1')"> Decoration </el-button>
+      </el-row>
+      <el-row justify="center">
+        <el-button> Mix </el-button>
+      </el-row>
+      <el-row justify="center">
+        <el-button> Pouring </el-button>
+      </el-row>
     </div>
   </div>
 </template>
@@ -45,5 +32,13 @@
 
 export default {
   name: "HomeView",
+  data() {
+    return {};
+  },
+  methods: {
+    onNavigate(name) {
+      this.$router.push(name);
+    },
+  },
 };
 </script>
