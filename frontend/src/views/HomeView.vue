@@ -25,7 +25,14 @@
         </el-button>
       </el-row>
       <el-row justify="center" class="btn">
-        <el-button size="large" type="primary" round> Mix </el-button>
+        <el-button
+          size="large"
+          type="primary"
+          @click="onNavigate('/mixing')"
+          round
+        >
+          Mix
+        </el-button>
       </el-row>
       <el-row justify="center" class="btn">
         <el-button size="large" type="primary" round> Pouring </el-button>
