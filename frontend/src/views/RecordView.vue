@@ -1,30 +1,42 @@
 <template>
   <div class="record">
-    <div class="overlay">
+    <div class="overlay" v-if="loading">
       {{ timer }}
     </div>
-    <div v-if="!isRecorded">
-      <el-row justify="center" class="timer">
-        <h1>{{ timer + "seconds" }}</h1>
+    <el-row justify="flex-start" class="backHome">
+      <el-button type="primary" size="large" round @click="onHome">
+        <el-icon>
+          <HomeFilled />
+        </el-icon>
+      </el-button>
+    </el-row>
+    <div v-if="!isRecorded" class="recordContent">
+      <el-row justify="center" class="timer" v-if="startSample">
+        <span class="time">{{ recording }}</span>
+        <span> secs</span>
       </el-row>
-      <div class="img">
-        <img src="../assets/flip-w.png" />
+      <div class="instruction">
+        <div class="img">
+          <img src="../assets/flip.png" />
+        </div>
+        <span>{{ instruction }}</span>
       </div>
-      <span>{{ instruction }}</span>
     </div>
     <el-row v-else class="confirm" justify="center">
-      <el-icon :size="48" color="#ffffff" class="icon">
+      <el-icon :size="200" color="#E7A67E" class="icon">
         <CircleCheck />
       </el-icon>
-      <span>{{ timer + " seconds collected, click Confirm to continue" }}</span>
+      <span>{{
+        recording + " seconds collected, click Confirm to continue"
+      }}</span>
       <el-row :gutter="20">
         <el-col :span="12" :offset="0"
-          ><el-button type="primary" size="default" @click="onConfirm"
+          ><el-button type="primary" size="large" @click="onConfirm" round
             >Confirm</el-button
           ></el-col
         >
         <el-col :span="12" :offset="0"
-          ><el-button type="primary" size="default" @click="onRetry"
+          ><el-button type="primary" size="large" @click="onRetry" round
             >Retry</el-button
           ></el-col
         >
@@ -37,13 +49,13 @@
 export default {
   data() {
     return {
-      isRecorded: true,
+      isRecorded: false,
       loading: false,
-      counter: 0,
-      timer: 0,
-      start: "0",
+      timer: 3,
+      recording: 0,
       instruction:
-        "Please turn your left wrist in a quick motion to start sampling",
+        "Please flip your left wrist in a quick motion to start sampling",
+      startSample: false,
     };
   },
   mounted() {
@@ -53,19 +65,21 @@ export default {
   },
   methods: {
     countDown() {
-      this.loading = true;
-      let count = setInterval(() => {
-        console.log(this.timer);
-        if (this.timer == "Start!") {
-          clearInterval(count);
-          this.loading = false;
-        } else {
-          this.timer = this.timer - 1;
-          if (this.timer === 0) {
-            this.timer = "Start!";
+      return new Promise((res) => {
+        let count = setInterval(() => {
+          console.log(this.timer);
+          if (this.timer == "Start!") {
+            clearInterval(count);
+            this.loading = false;
+            res(true);
+          } else {
+            this.timer = this.timer - 1;
+            if (this.timer === 0) {
+              this.timer = "Start!";
+            }
           }
-        }
-      }, 1000);
+        }, 1000);
+      });
     },
     onFlip() {
       let count = 0;
@@ -73,15 +87,19 @@ export default {
       this.$socket.send("flip");
       this.$options.sockets.onmessage = () => {
         if (count == 0) {
+          this.loading = true;
+          this.startSample = true;
           console.log(1);
-          this.counter = 3;
-          this.countDown();
-          this.instruction =
-            "Please turn your left wrist in a quick motion again to end sampling";
-          intervalId = setInterval(() => {
-            this.timer++;
-          }, 1000);
-          count++;
+          this.countDown().then((res) => {
+            if (res) {
+              this.instruction =
+                "Please flip your left wrist in a quick motion again to end sampling";
+              intervalId = setInterval(() => {
+                this.recording++;
+              }, 1000);
+              count++;
+            }
+          });
         } else {
           clearInterval(intervalId);
           this.isRecorded = true;
@@ -90,25 +108,51 @@ export default {
       };
     },
     onConfirm() {
-      localStorage.setItem("sample", this.timer);
+      localStorage.setItem("sample", this.recording);
       this.$router.push("/decoration/3");
     },
     onRetry() {},
+    onHome() {
+      this.$router.push("/");
+    },
   },
 };
 </script>
 
 <style scoped lang="scss">
 .record {
-  background-color: #e7a67e;
+  display: flex;
   height: 100%;
   width: 100%;
+  align-items: center;
+  flex-direction: column;
+}
+.backHome {
+  padding-left: 1rem;
+  padding-top: 2rem;
+  margin-bottom: 2rem;
+  align-self: flex-start;
 }
 .timer {
-  color: white;
+  // color: white;
+  font-size: 1.5rem;
+  align-items: baseline;
+  .time {
+    font-size: 10rem;
+    font-weight: bold;
+  }
+}
+.instruction {
+  display: flex;
+  align-items: baseline;
+  img {
+    margin-right: 10rem;
+  }
+  span {
+    font-size: 1rem;
+  }
 }
 .confirm {
-  padding-top: 5rem;
   flex-direction: column;
   flex-grow: 1;
   align-items: center;
@@ -116,10 +160,11 @@ export default {
     margin-bottom: 1.5rem;
   }
   span {
-    color: white;
+    // color: white;
     margin-bottom: 1.5rem;
   }
 }
+
 .overlay {
   position: absolute;
   height: 100%;

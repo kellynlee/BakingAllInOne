@@ -26,7 +26,14 @@
             : Math.floor((this.sampleTime % 1000) / 10))
         }}
       </h1>
-      <el-button type="primary" @click="onPause" size="large">Pause</el-button>
+      <div class="btnArea">
+        <el-button type="primary" @click="onPause" size="large"
+          >Pause</el-button
+        >
+        <el-button type="primary" @click="onBack" size="large"
+          >Back to Home</el-button
+        >
+      </div>
     </div>
   </div>
 </template>
@@ -51,7 +58,7 @@ export default {
     this.sampleTime = localStorage.getItem("sample")
       ? localStorage.getItem("sample") * 1000
       : 0;
-    this.sampleTime = 15 * 1000;
+    // this.sampleTime = 15 * 1000;
     this.countDown().then((res) => {
       if (res) {
         this.sampleing();
@@ -116,6 +123,9 @@ export default {
       this.isPaused = false;
       this.sampleing();
     },
+    onBack() {
+      this.$router.push("/");
+    },
   },
 };
 </script>
@@ -152,6 +162,10 @@ export default {
     font-weight: bold;
     flex-direction: column;
   }
+}
+.btnArea {
+  display: flex;
+  flex-direction: row;
 }
 .finished {
   background-color: #e7a67e;

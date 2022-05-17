@@ -1,7 +1,12 @@
-@forward "element-plus/theme-chalk/src/common/var.scss" with (
-  $colors: (
-    "primary": (
-      "base": green,
-    ),
-  )
-);
+:root {
+  --el-color-primary: #e7a67e;
+  --el-color-primary-light-1: #e9ae8a;
+  --el-color-primary-light-2: #ebb797;
+  --el-color-primary-light-3: #eec0a4;
+  --el-color-primary-light-4: #f0c9b1;
+  --el-color-primary-light-5: #f3d2be;
+  --el-color-primary-light-6: #f5dbcb;
+  --el-color-primary-light-7: #f7e4d8;
+  --el-color-primary-light-8: #faede5;
+  --el-color-primary-light-9: #fcf6f2;
+}
