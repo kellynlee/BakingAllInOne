@@ -22,6 +22,11 @@ const routes = [
     name: "piping",
     component: () => import("../views/PipingView.vue"),
   },
+  {
+    path: "/mixing",
+    name: "mixing",
+    component: () => import("../views/MixView.vue"),
+  },
 ];
 
 const router = createRouter({
