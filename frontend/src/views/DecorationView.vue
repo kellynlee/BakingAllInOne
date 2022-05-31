@@ -24,7 +24,7 @@
     <div v-loading="isCalibrating" v-if="this.mode === '1'" class="displayArea">
       <div id="cal-pic">
         <img
-          src="https://i.ibb.co/fxvvdK8/calibration.png"
+          src="../assets/calibration.png"
           class="img-fluid h-100"
           v-loading="isCalibrating"
           alt="Hand calibration picture"
@@ -87,6 +87,7 @@
         </span>
       </div>
     </el-dialog>
+    <audio :src="audio.src" ref="audio"></audio>
   </div>
 </template>
 
@@ -103,6 +104,9 @@ export default {
       calibrateFinished: false,
       mode: "",
       pipingTime: "",
+      audio: {
+        src: require("../assets/hero_decorative-celebration-02.wav"),
+      },
     };
   },
   mounted() {
@@ -124,6 +128,7 @@ export default {
               this.decPercentatge = "66";
               this.calibrateFinished = true;
               this.mode = "2";
+              this.$refs.audio.play();
               ElMessage({
                 message: "Calibration Successful!",
                 type: "success",
@@ -158,6 +163,7 @@ export default {
           this.decPercentatge = "66";
           this.calibrateFinished = true;
           this.mode = "2";
+          this.$refs.audio.play();
           ElMessage({
             message: "Calibration Successful!",
             type: "success",

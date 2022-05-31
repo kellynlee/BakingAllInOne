@@ -93,7 +93,8 @@ export default {
           this.countDown().then((res) => {
             if (res) {
               this.instruction =
-                "Please flip your left wrist in a quick motion again to end sampling";
+                "Please tap your left wrist in a quick motion again to end sampling";
+              clearInterval(intervalId);
               intervalId = setInterval(() => {
                 this.recording++;
               }, 1000);
@@ -111,7 +112,16 @@ export default {
       localStorage.setItem("sample", this.recording);
       this.$router.push("/decoration/3");
     },
-    onRetry() {},
+    onRetry() {
+      this.isRecorded = false;
+      this.loading = false;
+      this.timer = 3;
+      this.recording = 0;
+      this.instruction =
+        "Please flip your left wrist in a quick motion to start sampling";
+      this.startSample = false;
+      this.onFlip();
+    },
     onHome() {
       this.$router.push("/");
     },

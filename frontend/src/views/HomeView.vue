@@ -21,7 +21,7 @@
           round
           @click="onNavigate('/decoration/1')"
         >
-          Decoration
+          Piping
         </el-button>
       </el-row>
       <el-row justify="center" class="btn">

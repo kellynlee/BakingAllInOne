@@ -35,6 +35,7 @@
         >
       </div>
     </div>
+    <audio :src="audio.src" ref="audio"></audio>
   </div>
 </template>
 <script>
@@ -47,6 +48,9 @@ export default {
       pipingArr: [],
       sampleTimer: "",
       isPaused: false,
+      audio: {
+        src: require("../assets/notification_simple-01.wav"),
+      },
     };
   },
   mounted() {
@@ -59,11 +63,12 @@ export default {
       ? localStorage.getItem("sample") * 1000
       : 0;
     // this.sampleTime = 15 * 1000;
-    this.countDown().then((res) => {
-      if (res) {
-        this.sampleing();
-      }
-    });
+    // this.countDown().then((res) => {
+    //   if (res) {
+    //     this.sampleing();
+    //   }
+    // });
+    this.sampleing();
   },
   methods: {
     countDown() {
@@ -104,8 +109,11 @@ export default {
         while (i < this.pipingArr.length) {
           if (originTime > 0) {
             this.sampleTime = originTime;
+            const count = await this.countDown();
+            this.$refs.audio.play();
+
             const res = await this.singleSample();
-            if (res) {
+            if (count && res) {
               clearInterval(this.sampleTimer);
               this.$socket.send("vibrate");
               this.pipingArr[i] = true;
