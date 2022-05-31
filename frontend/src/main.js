@@ -21,5 +21,5 @@ app
   .use(router)
   .use(ElementPlus)
   .use(store)
-  .use(VueNativeSock, "ws://172.20.10.8/ws")
+  .use(VueNativeSock, "ws://172.20.10.11/ws")
   .mount("#app");
